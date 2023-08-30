@@ -1,0 +1,26 @@
+export const topicBackgrounds = [
+    {
+        label:"日-大雾",
+        value:"gloomy"
+    }, 
+    {
+        label:"日-阳光",
+        value:"shine"
+    }, 
+    {
+        label:"日-晨曦",
+        value:"morning"
+    }, 
+    {
+        label:"夜-微风",
+        value:"wing"
+    }, 
+    {
+        label:"夜-雪",
+        value:"snow"
+    }, 
+    {
+        label:"夜-寒",
+        value:"chill"
+    }
+]

@@ -1,0 +1,81 @@
+/*
+    This file using for carousel style in Learning.vue 
+*/
+
+.gloomy{
+    background: url(/src/assets/imgs/cb-day-gloomy.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color:#ffffff
+}
+.gloomy .el-text {
+    /* CSS样式规则 */
+    color:#ffffff
+}
+.shine{
+    background: url(/src/assets/imgs/cb-day-shine.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color:#ffffff
+}
+.shine .el-text {
+    /* CSS样式规则 */
+    color:black
+}
+.frog{
+    background: url(/src/assets/imgs/cb-frog-morning.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color:#ffffff
+}
+.frog .el-text {
+    /* CSS样式规则 */
+    color:black
+}
+.wing{
+    background: url(/src/assets/imgs/cb-morning-wing.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color:#ffffff
+}
+.wing .el-text {
+    /* CSS样式规则 */
+    color:black
+}
+.chill{
+    background: url(/src/assets/imgs/cb-night-chill.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color:#ffffff
+}
+.chill .el-text {
+    /* CSS样式规则 */
+    color:#ffffff
+}
+.chill-snow{
+    background: url(/src/assets/imgs/cb-night-chill-snow.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color:#ffffff
+}
+.chill-snow .el-text {
+    /* CSS样式规则 */
+    color:#ffffff
+}
+.morning{
+    background: url(/src/assets/imgs/cb-frog-morning.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color:#ffffff
+}
+.morning .el-text {
+    /* CSS样式规则 */
+    color: black
+}
