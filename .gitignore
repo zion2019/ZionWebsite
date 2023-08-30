@@ -61,4 +61,5 @@ log
 temp/
 ### security ###
 application-security.yml
-.security
+security/
+image/
