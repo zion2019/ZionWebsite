@@ -1,4 +1,4 @@
-package com.zion.learning.repository;
+package com.zion.learning.repository.mongo;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.text.CharSequenceUtil;
@@ -25,38 +25,14 @@ import java.util.List;
 
 @AllArgsConstructor
 @Repository
-public class PracticeRepository implements PracticeDao {
-
-    private MongoTemplate mongoTemplate;
-
-    public Practice getById(Long id) {
-        return mongoTemplate.findById(id, Practice.class);
-    }
-
-    @Override
-    public List<Practice> condition(Practice condition) {
-        Query query = getQuery(condition);
-        return mongoTemplate.find(query, Practice.class);
-    }
-
-    @Override
-    public Practice conditionOne(Practice condition) {
-        Query query = getQuery(condition);
-        return mongoTemplate.findOne(query, Practice.class);
-    }
-
-    @Override
-    public long conditionCount(Practice condition) {
-        Query query = getQuery(condition);
-        return mongoTemplate.count(query, Practice.class);
-    }
-
+public class PracticeRepository extends ZWMongoBasicRep<Practice> implements PracticeDao {
     /**
      * generate query by condition
      * @param condition
      * @return
      */
-    private Query getQuery(Practice condition) {
+    @Override
+    public Query generateQuery(Practice condition) {
         Query query = new Query();
         query.addCriteria(Criteria.where("deleted").is(CommonConstant.DELETED_NO));
         if(condition.getUserId() != null){
@@ -94,36 +70,12 @@ public class PracticeRepository implements PracticeDao {
     }
 
     @Override
-    public boolean save(Practice Practice) {
-        BaseEntityUtil.filedBasicInfo(Practice);
-        mongoTemplate.save(Practice);
-        return true;
-    }
-
-    @Override
-    public long delete(Practice condition) {
-        Update update = new Update().set("deleted", CommonConstant.DELETED_YES);
-        UpdateResult result = mongoTemplate.updateMulti(getQuery(condition), update, Practice.class);
-        return result.getModifiedCount();
-    }
-
-    @Override
-    public <E> Page pageQuery(Page page,Class<E> e, Practice condition) {
-
-
-
-
-        return page;
-    }
-
-    @Override
     public Page findUndoTopicByDate(Integer pageNo, Integer pageSize, Practice condition) {
         Page page = new Page<>();
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);
         List<AggregationOperation> basicOperation = new ArrayList<>();
         basicOperation.add(Aggregation.match(Criteria.where("practiseDate").lte(condition.getLtePractiseDate())));
-//        basicOperation.add(Aggregation.match(Criteria.where("result").is(condition.getResult())));
         basicOperation.add(Aggregation.match(Criteria.where("deleted").is(CommonConstant.DELETED_NO)));
         basicOperation.add(Aggregation.match(Criteria.where("userId").is(condition.getUserId())));
 
@@ -155,15 +107,6 @@ public class PracticeRepository implements PracticeDao {
         page.setDataList(resultList);
 
         return page;
-    }
-
-    @Override
-    public Long remove(Practice condition) {
-        Update update = new Update().set("deleted", CommonConstant.DELETED_YES);
-        update.set("updateTime",new Date());
-        Query query = getQuery(condition);
-        UpdateResult result = mongoTemplate.updateMulti(query, update, Practice.class);
-        return result.getModifiedCount();
     }
 }
 

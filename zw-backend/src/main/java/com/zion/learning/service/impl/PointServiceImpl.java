@@ -63,7 +63,7 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public boolean existPointByTopicId(Long topicId) {
-        return pointDao.conditionCount(PointQO.builder().topicId(topicId).build()) > 0;
+        return pointDao.conditionCount(Point.builder().topicId(topicId).build()) > 0;
     }
 
     /**
@@ -73,8 +73,7 @@ public class PointServiceImpl implements PointService {
      */
     public TopicStatisticVo statisticMastery(Long topicId) {
         TopicStatisticVo statisticVo = new TopicStatisticVo();
-
-        List<Point> points = pointDao.condition(PointQO.builder().topicId(topicId).build());
+        List<Point> points = pointDao.condition(Point.builder().topicId(topicId).build());
         if(CollUtil.isEmpty(points)){
             return statisticVo;
         }
@@ -91,7 +90,8 @@ public class PointServiceImpl implements PointService {
      * @return
      */
     public Page<PointVo> list(PointQO pointQO) {
-        return pointDao.pageQuery(PointVo.class, pointQO);
+        return pointDao.pageQuery(new Page<>(pointQO.getPageNo(),pointQO.getPageSize()),PointVo.class
+                , Point.builder().title(pointQO.getTitle()).topicId(pointQO.getTopicId()).build());
     }
 
     /**
@@ -139,7 +139,7 @@ public class PointServiceImpl implements PointService {
         BeanUtil.copyProperties(point,vo);
 
         // sub-point
-        List<SubPoint> subPoints = subPointDao.condition(SubPointQO.builder().pointId(pointId).build());
+        List<SubPoint> subPoints = subPointDao.condition(SubPoint.builder().pointId(pointId).build());
         if(CollUtil.isNotEmpty(subPoints)){
             vo.setSubPoints(BeanUtil.copyToList(subPoints, SubPointVo.class));
         }
@@ -148,9 +148,10 @@ public class PointServiceImpl implements PointService {
     }
 
     public boolean delete(Long pointId) {
-
-        pointDao.delete(PointQO.builder().id(pointId).build());
-        subPointDao.delete(SubPointQO.builder().pointId(pointId).build());
+        Point build = Point.builder().build();
+        build.setId(pointId);
+        pointDao.delete(build);
+        subPointDao.delete(SubPoint.builder().pointId(pointId).build());
 
         return true;
     }

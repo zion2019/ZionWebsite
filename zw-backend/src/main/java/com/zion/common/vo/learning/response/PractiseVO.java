@@ -21,7 +21,6 @@ public class PractiseVO implements Serializable {
 
     private DegreeOfMastery degreeOfMastery;
 
-
     public BigDecimal toDayDoneCount;
 
     public BigDecimal undoCount;

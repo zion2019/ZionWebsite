@@ -87,27 +87,18 @@ public class PracticeServiceImpl implements PracticeService {
 
             vo.setUndoCount(BigDecimal.valueOf(practisesForTopic.stream().filter(p -> PractiseResult.UNDO.equals(p.getResult())).count()));
             vo.setToDayDoneCount(BigDecimal.ZERO);
-            vo.setToDayTotalCount(BigDecimal.ZERO);
-            vo.setToDayCompletePercent(new BigDecimal("100"));
+            vo.setToDayCompletePercent(new BigDecimal("0"));
 
-            for (Practice p : practisesForTopic) {
-                if(p.getUpdatedTime() != null
-                        && LocalDateTimeUtil.beginOfDay(LocalDateTime.now()).compareTo(LocalDateTimeUtil.beginOfDay(p.getUpdatedTime())) == 0
-                        && PractiseResult.DONE.equals(p.getResult())){
-                    System.out.println(p);
-                }
-            }
-
-            // 今日数量统计
+            // 今日完成数量统计
             practisesForTopic.stream().filter(p ->
                     p.getUpdatedTime() != null
                     && LocalDateTimeUtil.beginOfDay(LocalDateTime.now()).compareTo(LocalDateTimeUtil.beginOfDay(p.getUpdatedTime())) == 0
-            ).forEach(p-> {
-                vo.setToDayTotalCount(vo.getToDayTotalCount().add(BigDecimal.ONE));
-                if(PractiseResult.DONE.equals(p.getResult())){
-                    vo.setToDayDoneCount(vo.getToDayDoneCount().add(BigDecimal.ONE));
-                }
-            });
+                    && PractiseResult.DONE.equals(p.getResult())
+            ).forEach(p->vo.setToDayDoneCount(vo.getToDayDoneCount().add(BigDecimal.ONE)));
+
+            // 今日需要复习总量 截至今日待复习+今日已复习
+            vo.setToDayTotalCount(vo.getToDayDoneCount().add(vo.getUndoCount()));
+
             if(vo.getToDayDoneCount() != null && vo.getToDayTotalCount() != null && vo.getToDayDoneCount().compareTo(BigDecimal.ZERO) > 0){
                 vo.setToDayCompletePercent(vo.getToDayDoneCount().divide(vo.getToDayTotalCount(),2, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100)));
             }

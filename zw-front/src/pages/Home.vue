@@ -24,7 +24,7 @@
                 <br/>
                 <span>使用前需要你耐心注册，不涉及隐私信息。</span>
                 <br/>
-                <a @click="toLearing" href="javascript:void(0);">开始学习吧！</a>～
+                <a @click="toLearing" href="javascript:void(0);">Let's start learning ！</a>
                 <br/>
             </div>
         </div>
