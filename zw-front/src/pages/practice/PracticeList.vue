@@ -1,5 +1,5 @@
 <template>
-    <window>
+    <window :buttons="buttons">
         <List editRoutor="PointEdit" @keywordChange="keywordChange" @toNew="practise" @back="back">
             <div class="infinite-list-wrapper" style="overflow: auto">
                 <ul
@@ -26,6 +26,7 @@ import Window from '../../components/Window.vue';
 import List from '../../components/List.vue';
 import {PracticeService} from '../../api/api'
 import '../../assets/carousel.css'
+import { ElMessage } from 'element-plus'
 
 // 路由相关导入
 import { useRouter } from 'vue-router';
@@ -41,6 +42,16 @@ interface Topic {
   undoCount: number;
   background:string;
 }
+
+// 按钮定义
+const buttons = [
+      {
+        'type':'warning'
+        ,'isPlain':true
+        ,'label':'首页'
+        ,'function':back
+      }
+]
 
 const keyword = ref('');
 const topics = ref<Topic[]>([]);
@@ -91,6 +102,10 @@ function resetList() {
 
 /** 知识点详情页面 */
 function practise(topic : Topic){
+  if(topic.undoCount <= 100){
+    ElMessage.success("已经复习完啦");
+    return;
+  }
   store.commit('setTopicId',topic.topicId);
   store.commit('setPointId',topic.pointId);
   store.commit('setFullTitle',topic.fullTitle);

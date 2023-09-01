@@ -87,7 +87,7 @@
 
   /** practise(item.completePercent) */
   function practise(topic){
-    if(topic.completePercent >= 100){
+    if(topic.toDayCompletePercent >= 100){
       ElMessage.success("已经复习完啦");
       return;
     }

@@ -88,7 +88,7 @@ public class PracticeServiceImpl implements PracticeService {
             vo.setUndoCount(BigDecimal.valueOf(practisesForTopic.stream().filter(p -> PractiseResult.UNDO.equals(p.getResult())).count()));
             vo.setToDayDoneCount(BigDecimal.ZERO);
             vo.setToDayTotalCount(BigDecimal.ZERO);
-            vo.setToDayCompletePercent(BigDecimal.ZERO);
+            vo.setToDayCompletePercent(new BigDecimal("100"));
 
             for (Practice p : practisesForTopic) {
                 if(p.getUpdatedTime() != null
