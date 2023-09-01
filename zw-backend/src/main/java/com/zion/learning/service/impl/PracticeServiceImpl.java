@@ -90,14 +90,6 @@ public class PracticeServiceImpl implements PracticeService {
             vo.setToDayTotalCount(BigDecimal.ZERO);
             vo.setToDayCompletePercent(new BigDecimal("100"));
 
-            for (Practice p : practisesForTopic) {
-                if(p.getUpdatedTime() != null
-                        && LocalDateTimeUtil.beginOfDay(LocalDateTime.now()).compareTo(LocalDateTimeUtil.beginOfDay(p.getUpdatedTime())) == 0
-                        && PractiseResult.DONE.equals(p.getResult())){
-                    System.out.println(p);
-                }
-            }
-
             // 今日数量统计
             practisesForTopic.stream().filter(p ->
                     p.getUpdatedTime() != null
