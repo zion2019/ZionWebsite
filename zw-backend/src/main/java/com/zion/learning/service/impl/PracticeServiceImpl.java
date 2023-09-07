@@ -89,17 +89,15 @@ public class PracticeServiceImpl implements PracticeService {
             vo.setToDayDoneCount(BigDecimal.ZERO);
             vo.setToDayCompletePercent(new BigDecimal("0"));
 
-            // 今日完成数量统计
-            // 今日数量统计
+            // today done
             practisesForTopic.stream().filter(p ->
                     p.getUpdatedTime() != null
                     && LocalDateTimeUtil.beginOfDay(LocalDateTime.now()).compareTo(LocalDateTimeUtil.beginOfDay(p.getUpdatedTime())) == 0
                     && PractiseResult.DONE.equals(p.getResult())
             ).forEach(p->vo.setToDayDoneCount(vo.getToDayDoneCount().add(BigDecimal.ONE)));
 
-            // 今日需要复习总量 截至今日待复习+今日已复习
+            // today total = today done + undo
             vo.setToDayTotalCount(vo.getToDayDoneCount().add(vo.getUndoCount()));
-
             if(vo.getToDayDoneCount() != null && vo.getToDayTotalCount() != null && vo.getToDayDoneCount().compareTo(BigDecimal.ZERO) > 0){
                 vo.setToDayCompletePercent(vo.getToDayDoneCount().divide(vo.getToDayTotalCount(),2, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100)));
             }
