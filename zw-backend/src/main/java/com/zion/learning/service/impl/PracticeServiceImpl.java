@@ -1,6 +1,7 @@
 package com.zion.learning.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import com.zion.common.basic.Page;
 import com.zion.common.vo.learning.request.PointQO;
@@ -25,6 +26,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -87,7 +89,7 @@ public class PracticeServiceImpl implements PracticeService {
 
             vo.setUndoCount(BigDecimal.valueOf(practisesForTopic.stream().filter(p -> PractiseResult.UNDO.equals(p.getResult())).count()));
             vo.setToDayDoneCount(BigDecimal.ZERO);
-            vo.setToDayCompletePercent(new BigDecimal("0"));
+            vo.setToDayCompletePercent(new BigDecimal("-1"));
 
             // today done
             practisesForTopic.stream().filter(p ->

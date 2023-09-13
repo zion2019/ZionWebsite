@@ -87,7 +87,7 @@
 
   /** practise(item.completePercent) */
   function practise(topic){
-    if(topic.toDayCompletePercent >= 100){
+    if(topic.toDayCompletePercent >= 100 || topic.toDayCompletePercent < 0){
       ElMessage.success("已经复习完啦");
       return;
     }
@@ -104,6 +104,9 @@
 
   // 轮播图进度条样式
   const progressStatus = (completePercent) =>{
+    if(completePercent < 30){
+        return '';
+    }
     if(completePercent > 30 && completePercent <= 80  ){
         return 'warning';
     }
