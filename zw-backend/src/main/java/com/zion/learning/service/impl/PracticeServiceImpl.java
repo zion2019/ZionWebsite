@@ -100,7 +100,7 @@ public class PracticeServiceImpl implements PracticeService {
 
             // today total = today done + undo
             vo.setToDayTotalCount(vo.getToDayDoneCount().add(vo.getUndoCount()));
-            if(vo.getToDayDoneCount() != null && vo.getToDayTotalCount() != null && vo.getToDayDoneCount().compareTo(BigDecimal.ZERO) > 0){
+            if(vo.getToDayDoneCount() != null && vo.getToDayTotalCount() != null && vo.getToDayTotalCount().compareTo(BigDecimal.ZERO) > 0){
                 vo.setToDayCompletePercent(vo.getToDayDoneCount().divide(vo.getToDayTotalCount(),2, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100)));
             }
         }

@@ -103,7 +103,7 @@ function resetList() {
 
 /** 知识点详情页面 */
 function practise(topic : Topic){
-  if(topic.undoCount <= 100 || topic.toDayCompletePercent < 0){
+  if(topic.toDayCompletePercent <= 100 && topic.toDayCompletePercent > 0){
     ElMessage.success("已经复习完啦");
     return;
   }
